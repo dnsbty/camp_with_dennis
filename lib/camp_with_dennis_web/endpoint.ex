@@ -1,8 +1,6 @@
 defmodule CampWithDennisWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :camp_with_dennis
 
-  socket "/socket", CampWithDennisWeb.UserSocket
-
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
