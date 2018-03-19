@@ -1,4 +1,4 @@
-# CampWithDennis
+# CampWithDennis ![CampWithDennis Build Status](https://img.shields.io/circleci/project/github/dnsbty/camp_with_dennis/master.svg)
 ![Camping is Fun!](https://user-images.githubusercontent.com/3421625/37573274-b067baf6-2adb-11e8-8410-56f729c18d2a.gif)
 
 CampWithDennis is an app to power one-off event websites. It's built in Elixir on the Phoenix Framework.

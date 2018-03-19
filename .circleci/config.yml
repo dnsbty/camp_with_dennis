@@ -4,7 +4,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /app
+    working_directory: ~/app
     docker:
       - image: circleci/elixir:1.6
         environment:
