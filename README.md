@@ -1,19 +1,14 @@
 # CampWithDennis
+![Camping is Fun!](https://user-images.githubusercontent.com/3421625/37573274-b067baf6-2adb-11e8-8410-56f729c18d2a.gif)
 
-To start your Phoenix server:
+CampWithDennis is an app to power one-off event websites. It's built in Elixir on the Phoenix Framework.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Start Phoenix endpoint with `mix phx.server`
+## Running the server
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+1. Make sure you have [Elixir 1.5 and OTP 20 installed](https://elixir-lang.org/install.html)
+2. Clone the repo onto your local machine: `git clone git@github.com:dnsbty/camp_with_dennis.git`
+3. Install the project's dependencies: `cd bull-server && mix deps.get`
+4. Create and migrate the database: `mix ecto.create && mix ecto.migrate`
+5. Start the server: `mix phx.server`
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+Now you can connect to [`localhost:4000`](http://localhost:4000)
