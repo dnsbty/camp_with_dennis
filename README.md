@@ -11,4 +11,4 @@ CampWithDennis is an app to power one-off event websites. It's built in Elixir o
 4. Create and migrate the database: `mix ecto.create && mix ecto.migrate`
 5. Start the server: `mix phx.server`
 
-Now you can connect to [`localhost:4000`](http://localhost:4000)
+Now you can connect to [`localhost:2267`](http://localhost:2267)
