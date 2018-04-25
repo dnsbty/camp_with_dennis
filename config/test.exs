@@ -17,3 +17,5 @@ config :camp_with_dennis, CampWithDennis.Repo,
   database: "camp_with_dennis_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :camp_with_dennis, message_bird_access_key: "ACCESS_KEY"
