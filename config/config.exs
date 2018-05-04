@@ -7,6 +7,7 @@ use Mix.Config
 
 # General application configuration
 config :camp_with_dennis,
+  environment: Mix.env(),
   ecto_repos: [CampWithDennis.Repo]
 
 # Configures the endpoint

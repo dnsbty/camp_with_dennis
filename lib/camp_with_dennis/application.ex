@@ -4,7 +4,10 @@ defmodule CampWithDennis.Application do
   def start(_type, _args) do
     import Supervisor.Spec
 
-    if Mix.env() != :test, do: SmsVerification.start()
+    case Application.get_env(:camp_with_dennis, :environment) do
+      :test -> nil
+      _ -> SmsVerification.start()
+    end
 
     children = [
       supervisor(CampWithDennis.Repo, []),
