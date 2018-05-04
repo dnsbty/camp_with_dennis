@@ -20,7 +20,11 @@ defmodule CampWithDennis.Mixfile do
   def application do
     [
       mod: {CampWithDennis.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [
+        :logger,
+        :runtime_tools,
+        :parse_trans
+      ]
     ]
   end
 
