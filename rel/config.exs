@@ -47,6 +47,7 @@ end
 release :camp_with_dennis do
   set version: current_version(:camp_with_dennis)
   set applications: [
+    :crypto,
     :runtime_tools
   ]
 
