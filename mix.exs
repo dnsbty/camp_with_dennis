@@ -21,6 +21,7 @@ defmodule CampWithDennis.Mixfile do
     [
       mod: {CampWithDennis.Application, []},
       extra_applications: [
+        :crypto,
         :logger,
         :runtime_tools,
         :parse_trans
