@@ -22,6 +22,19 @@ defmodule CampWithDennis.Invitations do
   end
 
   @doc """
+  Count invitations.
+
+  ## Examples
+
+      iex> count_invitations()
+      1
+
+  """
+  def count_invitations do
+    Repo.one(from i in Invitation, select: fragment("count(1)"))
+  end
+
+  @doc """
   Gets a single invitation.
 
   Raises `Ecto.NoResultsError` if the Invitation does not exist.
@@ -100,5 +113,18 @@ defmodule CampWithDennis.Invitations do
   """
   def change_invitation(%Invitation{} = invitation) do
     Invitation.changeset(invitation, %{})
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` more for display purposes.
+
+  ## Examples
+
+      iex> invitation_changeset(%{some: "params"})
+      %Ecto.Changeset{changes: %{some: "params"}}
+
+  """
+  def invitation_changeset(params \\ %{}) do
+    Invitation.changeset(%Invitation{}, params)
   end
 end

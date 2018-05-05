@@ -1,1 +1,5 @@
 <h1>Admin</h1>
+
+<p><%= @count %> invitations have been created.</p>
+
+<%= link("New Invitation", to: invitations_path(@conn, :new), class: "btn btn-primary") %>

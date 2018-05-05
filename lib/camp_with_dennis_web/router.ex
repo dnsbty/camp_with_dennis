@@ -11,6 +11,10 @@ defmodule CampWithDennisWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :admin do
+    plug :ensure_admin
+  end
+
   pipeline :verified do
     plug :ensure_verified
   end
@@ -23,7 +27,14 @@ defmodule CampWithDennisWeb.Router do
     pipe_through :browser
 
     scope "/admin" do
-      get "/index", AdminController, :index
+      pipe_through :admin
+
+      scope "/invitations" do
+        get "/new", InvitationsController, :new
+        post "/create", InvitationsController, :create
+      end
+
+      get "/", AdminController, :index
     end
 
     scope "/rsvp" do

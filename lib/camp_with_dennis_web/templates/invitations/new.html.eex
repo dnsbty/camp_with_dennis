@@ -1,0 +1,25 @@
+<h1>New Invitation</h1>
+<%= form_for @changeset, invitations_path(@conn, :create), fn f -> %>
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+  <%= inputs_for f, :phone, fn p -> %>
+    <div class="form-group">
+      <%= label p, :number, class: "control-label" %>
+      <%= telephone_input p, :number, class: "form-control", id: "phone" %>
+      <%= error_tag p, :number %>
+    </div>
+  <% end %>
+
+  <%= submit "Invite", class: "btn btn-primary btn-block" %>
+  <%= link "Cancel", to: admin_path(@conn, :index), class: "btn btn-block" %>
+<% end %>
+
+<script type="text/javascript">
+  document.getElementById('phone').addEventListener('input', function (e) {
+    var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+  });
+</script>

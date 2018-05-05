@@ -16,11 +16,11 @@ defmodule CampWithDennis.Invitations.Invitation do
   end
 
   @doc false
-  def changeset(invitation, %{attrs: attrs, invited_by: invited_by}) do
+  def changeset(invitation, attrs) do
     invitation
     |> cast(attrs, @fields)
     |> validate_required(@fields)
-    |> put_assoc(:invited_by, invited_by)
+    |> put_assoc(:invited_by, attrs["invited_by"])
     |> cast_assoc(:phone, required: true, with: &Number.changeset/2)
   end
 end
