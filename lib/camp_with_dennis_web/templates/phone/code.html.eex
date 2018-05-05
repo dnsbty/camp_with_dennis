@@ -5,7 +5,7 @@
     Code <%= text_input f, :code %>
   </label>
 
-  <%= hidden_input f, :phone %>
+  <%= hidden_input f, :number %>
 
   <%= submit "Start" %>
 <% end %>

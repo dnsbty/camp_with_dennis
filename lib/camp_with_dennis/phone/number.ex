@@ -1,32 +1,40 @@
 defmodule CampWithDennis.Phone.Number do
   use Ecto.Schema
   import Ecto.Changeset
+  alias CampWithDennis.Admin.User, as: Admin
 
   @phone_regex ~r"^\((\d{3})\) (\d{3})-(\d{4})$"
   @phone_error_message "number doesn't match the expected format (xxx) xxx-xxxx"
 
-  @fields [
-    :phone
+  @attrs [
+    :number
   ]
 
-  @primary_key false
-  embedded_schema do
-    field :phone, :string
+  @derive {Poison.Encoder, only: @attrs}
+
+  schema "phones" do
+    field :number, :string
+
+    belongs_to :admin, Admin
+
+    timestamps()
   end
 
   def changeset(struct, params) do
     struct
-    |> cast(params, @fields)
-    |> validate_required(@fields)
+    |> cast(params, @attrs)
+    |> validate_required(@attrs)
     |> format_phone()
+    |> unique_constraint(:number, name: :phones_number_index)
+    |> IO.inspect
   end
 
   defp format_phone(changeset) do
-    phone = get_field(changeset, :phone) || ""
-    case Regex.run(@phone_regex, phone) do
-      nil -> add_error(changeset, :phone, @phone_error_message)
+    number = get_field(changeset, :number) || ""
+    case Regex.run(@phone_regex, number) do
+      nil -> add_error(changeset, :number, @phone_error_message)
       [_ | parts] ->
-        put_change(changeset, :phone, "+1#{Enum.join(parts)}")
+        put_change(changeset, :number, "+1#{Enum.join(parts)}")
     end
   end
 

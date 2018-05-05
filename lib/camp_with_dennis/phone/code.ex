@@ -4,7 +4,7 @@ defmodule CampWithDennis.Phone.Code do
 
   @fields [
     :code,
-    :phone
+    :number
   ]
 
   @code_format ~r"\d{6}"
@@ -14,7 +14,7 @@ defmodule CampWithDennis.Phone.Code do
   @primary_key false
   embedded_schema do
     field :code, :string
-    field :phone, :string
+    field :number, :string
   end
 
   def changeset(struct, params) do
@@ -22,15 +22,17 @@ defmodule CampWithDennis.Phone.Code do
     |> cast(params, @fields)
     |> validate_required(@fields)
     |> validate_format(:code, @code_format, message: "should be 6-digits long")
-    |> validate_format(:phone, @phone_format, message: "was not provided")
+    |> validate_format(:number, @phone_format, message: "was not provided")
     |> verify_code()
   end
 
-  def from_changeset(changeset), do: apply_changes(changeset)
+  def from_changeset(changeset) do
+    apply_changes(changeset)
+  end
 
   defp verify_code(%{valid?: false} = changeset), do: changeset
   defp verify_code(changeset) do
-    phone = get_field(changeset, :phone)
+    phone = get_field(changeset, :number)
     code = get_field(changeset, :code)
 
     case SmsVerification.verify(phone, code) do

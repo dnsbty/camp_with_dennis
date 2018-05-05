@@ -1,6 +1,7 @@
 defmodule CampWithDennisWeb.Router do
   use CampWithDennisWeb, :router
   import CampWithDennisWeb.Verification
+  alias CampWithDennisWeb.Redirect
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -20,6 +21,10 @@ defmodule CampWithDennisWeb.Router do
 
   scope "/", CampWithDennisWeb do
     pipe_through :browser
+
+    scope "/admin" do
+      get "/index", AdminController, :index
+    end
 
     scope "/rsvp" do
       pipe_through :verified

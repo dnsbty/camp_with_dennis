@@ -3,7 +3,7 @@
 <p>To begin, please enter your phone number</p>
 <%= form_for @changeset, phone_path(@conn, :code), fn f -> %>
   <label>
-    Phone Number: <%= telephone_input f, :phone, id: "phone" %>
+    Phone Number: <%= telephone_input f, :number, id: "phone" %>
   </label>
 
   <%= submit "Start" %>

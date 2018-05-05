@@ -15,7 +15,7 @@ defmodule CampWithDennisWeb.RsvpController do
   end
 
   def size(conn, size) do
-    with {:ok, size} <- Rsvp.validate_size(size) do
+    with {:ok, _size} <- Rsvp.validate_size(size) do
       redirect(conn, to: rsvp_path(conn, :pay))
     else
       {:error, changeset} ->
