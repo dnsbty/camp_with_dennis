@@ -7,4 +7,8 @@ defmodule CampWithDennis.Admin do
     |> User.changeset(params)
     |> Repo.insert()
   end
+
+  def find(id) do
+    Repo.get(User, id)
+  end
 end

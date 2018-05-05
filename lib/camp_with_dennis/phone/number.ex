@@ -2,6 +2,7 @@ defmodule CampWithDennis.Phone.Number do
   use Ecto.Schema
   import Ecto.Changeset
   alias CampWithDennis.Admin.User, as: Admin
+  alias CampWithDennis.Invitations.Invitation
 
   @phone_regex ~r"^\((\d{3})\) (\d{3})-(\d{4})$"
   @phone_error_message "number doesn't match the expected format (xxx) xxx-xxxx"
@@ -16,6 +17,7 @@ defmodule CampWithDennis.Phone.Number do
     field :number, :string
 
     belongs_to :admin, Admin
+    belongs_to :invitation, Invitation
 
     timestamps()
   end
@@ -26,7 +28,6 @@ defmodule CampWithDennis.Phone.Number do
     |> validate_required(@attrs)
     |> format_phone()
     |> unique_constraint(:number, name: :phones_number_index)
-    |> IO.inspect
   end
 
   defp format_phone(changeset) do
