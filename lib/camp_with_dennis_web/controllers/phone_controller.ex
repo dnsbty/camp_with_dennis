@@ -2,6 +2,7 @@ defmodule CampWithDennisWeb.PhoneController do
   use CampWithDennisWeb, :controller
   alias CampWithDennis.Phone
   alias CampWithDennis.Admin.User, as: Admin
+  alias CampWithDennis.Invitations.Invitation
 
   def index(conn, _params) do
     render conn, "index.html", changeset: Phone.number_changeset()
@@ -19,10 +20,18 @@ defmodule CampWithDennisWeb.PhoneController do
     end
   end
 
+  def logout(conn, _) do
+    conn
+    |> clear_session()
+    |> redirect(to: "/")
+  end
+
   def verify(conn, %{"code" => code}) do
-    with {:ok, admin_or_invitation} <- Phone.verify(code) |> IO.inspect(label: "verification") do
+    with {:ok, admin_or_invitation} <- Phone.verify(code) do
       handle_user(conn, admin_or_invitation)
     else
+      {:not_found, _changeset} ->
+        render(conn, "awkward.html")
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Code is incorrect")
@@ -37,9 +46,9 @@ defmodule CampWithDennisWeb.PhoneController do
     |> redirect(to: admin_path(conn, :index))
   end
 
-  defp handle_user(conn, invitation_id) do
+  defp handle_user(conn, %Invitation{id: id}) do
     conn
-    |> put_session(:invitation_id, invitation_id)
+    |> put_session(:invitation_id, id)
     |> redirect(to: rsvp_path(conn, :index))
   end
 end

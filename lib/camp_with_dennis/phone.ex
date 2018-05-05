@@ -1,6 +1,7 @@
 defmodule CampWithDennis.Phone do
   import Ecto.Query
   alias CampWithDennis.Admin.User, as: Admin
+  alias CampWithDennis.Invitations.Invitation
   alias CampWithDennis.Repo
   alias CampWithDennis.Phone.{
     Code,
@@ -14,7 +15,8 @@ defmodule CampWithDennis.Phone do
   def get_phone(number) do
     Number
     |> join(:left, [n], a in assoc(n, :admin))
-    |> preload([n, a], [admin: a])
+    |> join(:left, [n], i in assoc(n, :invitation))
+    |> preload([n, a, i], [admin: a, invitation: i])
     |> limit(1)
     |> Repo.get_by(number: number)
   end
@@ -36,18 +38,19 @@ defmodule CampWithDennis.Phone do
   end
 
   def verify(params) do
-    with %{valid?: true} = changeset <- code_changeset(params),
+    changeset = code_changeset(params)
+    with %{valid?: true} <- changeset,
          %{number: number} = Code.from_changeset(changeset),
          %Number{} = phone <- get_phone(number) do
       case phone do
         %{admin: %Admin{} = admin} ->
           {:ok, admin}
-        _ ->
-          {:ok, phone}
+        %{invitation: %Invitation{} = invite} ->
+          {:ok, invite}
       end
     else
-      nil -> {:error, :number_not_found}
-      changeset -> {:error, changeset}
+      nil -> {:not_found, changeset}
+      _ -> {:error, changeset}
     end
   end
 end

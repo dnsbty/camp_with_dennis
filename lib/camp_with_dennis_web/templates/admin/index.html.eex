@@ -2,4 +2,5 @@
 
 <p><%= @count %> invitations have been created.</p>
 
-<%= link("New Invitation", to: invitations_path(@conn, :new), class: "btn btn-primary") %>
+<%= link("New Invitation", to: invitations_path(@conn, :new), class: "btn btn-primary btn-block") %>
+<%= link("Log Out", to: phone_path(@conn, :logout), class: "btn btn-block") %>

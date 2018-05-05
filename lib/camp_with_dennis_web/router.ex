@@ -55,5 +55,7 @@ defmodule CampWithDennisWeb.Router do
       post "/verify", PhoneController, :verify
       get "/", PhoneController, :index
     end
+
+    get "/logout", PhoneController, :logout
   end
 end

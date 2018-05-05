@@ -1,0 +1,5 @@
+<h2>😬 Well this is awkward...</h2>
+<p class="strong">There doesn't seem to be an invitation with your phone number on it yet...</p>
+<p>Because of the size of the camp site, I wasn't able to invite everyone I wanted to. Some people I invited might not be able to come though, so some spots might open up.</p>
+<p>Want to get on the waiting list?</p>
+<%= link("Text me", to: text_me_link("Hey Dennis, Can you add me to the Americamping waiting list?"), class: "btn btn-primary") %>
