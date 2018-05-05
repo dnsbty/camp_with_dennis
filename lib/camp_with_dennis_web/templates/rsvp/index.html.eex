@@ -1,0 +1,9 @@
+<h1>Americamping</h1>
+
+<p>Two years ago on the 240th anniversary of the birth of our nation, Dennis and three friends drove up into the deep wilderness of Utah's Uinta National Forest. Instantly a tradition was born.</p>
+<p>This year, the Third Annual Americamping Trip will happen Friday June 29th to Saturday June 30th. We have a spot at Flat Lake Campground in the Manti-La Sal National Forest, about an hour and a half from the Provo-Orem metroplex.</p>
+<p>The trip will cost $10 per person, and that will cover the camping site, a tshirt, and breakfast.</p>
+<p>Due to the limited space at the campsite, the trip has to be invite only. Depending on how others RSVP, there may be a limited number of spots available though. If there is someone you would like to have along, please <%= link("text me at 210-771-8253", to: text_me_link("Is there still room in the group for Americamping? I'd like to invite ")) %> and I'll let you know if we have any spots available.</p>
+<p>Will you be able to attend?</p>
+<%= button("Yes", to: rsvp_path(@conn, :accept), method: "post", class: "btn btn-primary btn-block")%>
+<%= button("No", to: rsvp_path(@conn, :decline), method: "post", class: "btn btn-default btn-block")%>

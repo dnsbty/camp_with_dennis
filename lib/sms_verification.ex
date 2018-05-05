@@ -22,7 +22,9 @@ defmodule SmsVerification do
     code = generate_code()
     store_code(phone_number, code)
     message = @message_base <> code
-    MessageBird.send_message(phone_number, message)
+    IO.puts "Sending to #{phone_number}: #{message}"
+    {:ok, %{}}
+    # MessageBird.send_message(phone_number, message)
   end
 
   @spec verify(phone_number :: String.t, code :: String.t) :: :ok | :error

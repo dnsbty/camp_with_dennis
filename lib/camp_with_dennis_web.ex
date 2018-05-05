@@ -23,6 +23,7 @@ defmodule CampWithDennisWeb do
       import Plug.Conn
       import CampWithDennisWeb.Router.Helpers
       import CampWithDennisWeb.Gettext
+      import CampWithDennisWeb.Helpers
     end
   end
 
@@ -40,6 +41,7 @@ defmodule CampWithDennisWeb do
       import CampWithDennisWeb.Router.Helpers
       import CampWithDennisWeb.ErrorHelpers
       import CampWithDennisWeb.Gettext
+      import CampWithDennisWeb.Helpers
     end
   end
 

@@ -1,5 +1,6 @@
 defmodule CampWithDennisWeb.Router do
   use CampWithDennisWeb, :router
+  import CampWithDennisWeb.Verification
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -9,18 +10,34 @@ defmodule CampWithDennisWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :verified do
+    plug :ensure_verified
+  end
+
+  pipeline :unverified do
+    plug :ensure_unverified
   end
 
   scope "/", CampWithDennisWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
-    get "/", PageController, :index
+    scope "/rsvp" do
+      pipe_through :verified
+
+      post "/accept", RsvpController, :accept
+      post "/decline", RsvpController, :decline
+      post "/size", RsvpController, :size
+      get "/pay", RsvpController, :pay
+
+      get "/", RsvpController, :index
+    end
+
+    scope "/" do
+      pipe_through :unverified
+
+      post "/code", PhoneController, :code
+      post "/verify", PhoneController, :verify
+      get "/", PhoneController, :index
+    end
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", CampWithDennisWeb do
-  #   pipe_through :api
-  # end
 end

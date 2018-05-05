@@ -1,0 +1,9 @@
+<h2>Payment</h2>
+<p>To finish reserving your spot, please send me the $10 to cover the spot, shirt, and breakfast.</p>
+<p>You can pay using any of the following methods:</p>
+
+<%= link("Venmo", to: {:venmo, "//paycharge?txn=pay&recipients=dnsbty&amount=10&note=🇺🇸🏕"}, class: "btn btn-primary btn-block") %>
+<%= link("Square Cash", to: "https://cash.me/$dns/10", class: "btn btn-success btn-block") %>
+<%= link("Apple Pay Cash", to: {:sms, "+12107718253"}, class: "btn btn-default btn-block") %>
+
+<p class="small">Once I've received your payment, I'll send you a confirmation that your spot is fully reserved. If you decide later that you can't make it, let me know and I'll send you a refund.</p>
