@@ -6,12 +6,34 @@ defmodule CampWithDennisWeb.RsvpController do
     render(conn, "index.html")
   end
 
-  def accept(conn, _) do
+  def accept(%{assigns: %{invitation: invitation}} = conn, _) do
+    with {:ok, _accepted} <- Rsvp.accept_invitation(invitation) do
+      redirect(conn, to: rsvp_path(conn, :accepted))
+    else
+      _ ->
+      conn
+      |> put_flash(:error, "😕 Something went wrong. Try again?")
+      |> render("index.html")
+    end
+  end
+
+  def accepted(conn, _) do
     render(conn, "accept.html")
   end
 
-  def decline(conn, _) do
-    render(conn, "decline.html")
+  def decline(%{assigns: %{invitation: invitation}} = conn, _) do
+    with {:ok, _accepted} <- Rsvp.decline_invitation(invitation) do
+      redirect(conn, to: rsvp_path(conn, :declined))
+    else
+      _ ->
+      conn
+      |> put_flash(:error, "😕 Something went wrong. Try again?")
+      |> render("index.html")
+    end
+  end
+
+  def declined(conn, _) do
+    render(conn, "declined.html")
   end
 
   def size(conn, size) do

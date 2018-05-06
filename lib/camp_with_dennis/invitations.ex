@@ -6,7 +6,11 @@ defmodule CampWithDennis.Invitations do
   import Ecto.Query, warn: false
   alias CampWithDennis.Repo
 
-  alias CampWithDennis.Invitations.Invitation
+  alias CampWithDennis.Invitations.{
+    Accepted,
+    Declined,
+    Invitation
+  }
 
   @doc """
   Returns the list of invitations.
@@ -49,6 +53,20 @@ defmodule CampWithDennis.Invitations do
 
   """
   def get_invitation!(id), do: Repo.get!(Invitation, id)
+
+  @doc """
+  Gets a single invitation.
+
+  ## Examples
+
+      iex> get_invitation!(123)
+      {:ok, %Invitation{}}
+
+      iex> get_invitation(456)
+      {:error, %Ecto.NoResultsError{}}
+
+  """
+  def get_invitation(id), do: Repo.get(Invitation, id)
 
   @doc """
   Creates a invitation.
@@ -126,5 +144,31 @@ defmodule CampWithDennis.Invitations do
   """
   def invitation_changeset(params \\ %{}) do
     Invitation.changeset(%Invitation{}, params)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` more for display purposes.
+
+  ## Examples
+
+      iex> accepted_changeset(%Invitation{})
+      %Ecto.Changeset{changes: %{invitation: %Invitation{}}}
+
+  """
+  def accepted_changeset(invitation \\ %{}) do
+    Accepted.changeset(%Accepted{}, invitation)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` more for display purposes.
+
+  ## Examples
+
+      iex> accepted_changeset(%Invitation{})
+      %Ecto.Changeset{changes: %{invitation: %Invitation{}}}
+
+  """
+  def declined_changeset(invitation \\ %{}) do
+    Declined.changeset(%Declined{}, invitation)
   end
 end

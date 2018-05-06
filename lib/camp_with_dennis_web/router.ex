@@ -41,7 +41,9 @@ defmodule CampWithDennisWeb.Router do
       pipe_through :verified
 
       post "/accept", RsvpController, :accept
+      get "/accepted", RsvpController, :accepted
       post "/decline", RsvpController, :decline
+      get "/declined", RsvpController, :declined
       post "/size", RsvpController, :size
       get "/pay", RsvpController, :pay
 

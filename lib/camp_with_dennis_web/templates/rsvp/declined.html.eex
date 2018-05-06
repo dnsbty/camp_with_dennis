@@ -1,0 +1,3 @@
+<h1>😞</h1>
+<p>I'm sad you won't be able to make it. Hopefully next year!</p>
+<p>If you change your mind and decide to come, just <%= link "text me at 210-771-8253", to: text_me_link("Hey Dennis, it looks like I'll be able to go to the Americamping trip after all. Is there still room for me?") %>. I can't guarantee that there will still be a spot open, but I'll see what I can do.</p>
