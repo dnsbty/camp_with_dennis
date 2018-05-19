@@ -12,27 +12,25 @@ jobs:
       - image: circleci/postgres:9.6
         environment:
           POSTGRES_USER: postgres
-
     steps:
       - checkout
       - run: mix local.hex --force
       - run: mix local.rebar
       - run: mix deps.get
       - run: mix test
-
   deploy:
     working_directory: ~/app
     docker:
-      - image: circleci/elixir:1.6
+      - image: dnsbty/elixir-build:latest
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
         environment:
           MIX_ENV: prod
     steps:
       - checkout
       - run: mix local.hex --force
       - run: mix local.rebar
-      - run:
-          name: Install rsync
-          command: sudo apt-get update -qq && sudo apt-get install -y ssh rsync openssl
       - run:
           name: Get Mix dependencies
           command: mix deps.get
@@ -58,7 +56,7 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      # - build
+      - build
       - deploy:
           requires:
             - build

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-$RELEASE_ROOT_DIR/bin/myapp command Elixir.MyApp.ReleaseTasks rollback
+$RELEASE_ROOT_DIR/bin/myapp command Elixir.CampWithDennis.ReleaseTasks rollback

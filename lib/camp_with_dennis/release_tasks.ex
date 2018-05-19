@@ -3,7 +3,7 @@ defmodule CampWithDennis.ReleaseTasks do
     :postgrex,
     :ecto
   ]
-  @app :myapp
+  @app :camp_with_dennis
 
   def repos, do: Application.get_env(@app, :ecto_repos, [])
 

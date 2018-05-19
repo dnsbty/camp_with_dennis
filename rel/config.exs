@@ -22,12 +22,6 @@ use Mix.Releases.Config,
 # and environment configuration is called a profile
 
 environment :dev do
-  # If you are running Phoenix, you should make sure that
-  # server: true is set and the code reloader is disabled,
-  # even in dev mode.
-  # It is recommended that you build with MIX_ENV=prod and pass
-  # the --env flag to Distillery explicitly if you want to use
-  # dev mode.
   set dev_mode: true
   set include_erts: false
   set cookie: :"{@9JSD.@7or`IhNh[;HC]^7A%6.C$7Jy.1mGO~bDHBt(9Su}LSikK~3)bn0v?=Ge"
@@ -47,7 +41,7 @@ end
 release :camp_with_dennis do
   set version: current_version(:camp_with_dennis)
   set applications: [
-    :crypto,
+    :parse_trans,
     :runtime_tools
   ]
 
