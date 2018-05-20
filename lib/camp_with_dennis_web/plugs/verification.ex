@@ -91,5 +91,6 @@ defmodule CampWithDennisWeb.Verification do
   @spec expected_path(invitation :: map()) :: atom()
   defp expected_path(%{accepted: nil, declined: nil}), do: "/rsvp"
   defp expected_path(%{declined: %Declined{}}), do: "/rsvp/declined"
-  defp expected_path(%{accepted: %Accepted{}}), do: "/rsvp/accepted"
+  defp expected_path(%{accepted: %Accepted{shirt_size: ""}}), do: "/rsvp/accepted"
+  defp expected_path(%{accepted: %Accepted{}}), do: "/rsvp/pay"
 end

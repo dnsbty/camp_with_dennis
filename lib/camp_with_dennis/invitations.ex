@@ -176,12 +176,12 @@ defmodule CampWithDennis.Invitations do
 
   ## Examples
 
-      iex> accepted_changeset(%Invitation{})
-      %Ecto.Changeset{changes: %{invitation: %Invitation{}}}
+      iex> accepted_changeset(%{})
+      %Ecto.Changeset{changes: %{}}
 
   """
-  def accepted_changeset(invitation \\ %{}) do
-    Accepted.changeset(%Accepted{}, invitation)
+  def accepted_changeset(params \\ %{}) do
+    Accepted.changeset(%Accepted{}, params)
   end
 
   @doc """

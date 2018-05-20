@@ -37,8 +37,8 @@ defmodule CampWithDennisWeb.RsvpController do
     render(conn, "declined.html")
   end
 
-  def size(conn, size) do
-    with {:ok, _size} <- Rsvp.validate_size(size) do
+  def size(%{assigns: %{invitation: invitation}} = conn, size) do
+    with {:ok, _invitation} <- Rsvp.save_size(invitation, size) do
       redirect(conn, to: rsvp_path(conn, :pay))
     else
       {:error, changeset} ->

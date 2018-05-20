@@ -1,12 +1,14 @@
 defmodule CampWithDennis.Rsvp do
   alias CampWithDennis.Rsvp.Size
+  alias CampWithDennis.Invitations.Accepted
   alias CampWithDennis.{
     Invitations,
     Repo
   }
 
   def accept_invitation(invitation) do
-    invitation
+    %{}
+    |> Map.put(:invitation, invitation)
     |> Invitations.accepted_changeset()
     |> Repo.insert()
   end
@@ -15,6 +17,14 @@ defmodule CampWithDennis.Rsvp do
     invitation
     |> Invitations.declined_changeset()
     |> Repo.insert()
+  end
+
+  def save_size(%{accepted: accepted}, params) do
+    with {:ok, size} <- validate_size(params) do
+      accepted
+      |> Accepted.changeset(%{shirt_size: size})
+      |> Repo.update()
+    end
   end
 
   def size_changeset(params \\ %{}) do

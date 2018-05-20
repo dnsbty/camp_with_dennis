@@ -7,7 +7,6 @@ defmodule CampWithDennis.Rsvp.Size do
   ]
 
   @possible_sizes ["XS", "S", "M", "L", "XL", "2XL", "Other"]
-  @size_error_message "is not a given option"
 
   @primary_key false
   embedded_schema do
