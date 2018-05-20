@@ -1,3 +1,3 @@
 #!/bin/sh
 
-$RELEASE_ROOT_DIR/bin/myapp command Elixir.CampWithDennis.ReleaseTasks seed
+$RELEASE_ROOT_DIR/bin/camp_with_dennis command Elixir.CampWithDennis.ReleaseTasks seed
