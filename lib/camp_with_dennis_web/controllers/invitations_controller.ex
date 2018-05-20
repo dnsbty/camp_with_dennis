@@ -7,7 +7,7 @@ defmodule CampWithDennisWeb.InvitationsController do
   end
 
   def create(%{assigns: %{admin: user}} = conn, %{"invitation" => invitation}) do
-    attrs = Map.put(invitation, "invited_by", user) |> IO.inspect(label: "attrs")
+    attrs = Map.put(invitation, "invited_by", user)
 
     with {:ok, _invitation} <- Invitations.create_invitation(attrs) do
       conn

@@ -1,6 +1,7 @@
 defmodule CampWithDennisWeb.RsvpController do
   use CampWithDennisWeb, :controller
   alias CampWithDennis.Rsvp
+  require Logger
 
   def index(conn, _) do
     render(conn, "index.html")
@@ -11,7 +12,7 @@ defmodule CampWithDennisWeb.RsvpController do
       redirect(conn, to: rsvp_path(conn, :accepted))
     else
       error ->
-        IO.inspect(error, label: "failed to accept invite")
+        Logger.error("Failed to accept invite: #{inspect error}")
         conn
         |> put_flash(:error, "😕 Something went wrong. Try again?")
         |> render("index.html")

@@ -20,5 +20,8 @@ config :camp_with_dennis, CampWithDennis.Repo,
   hostname: "localhost",
   pool_size: 15
 
+# Turn on SMS sending in production
+config :camp_with_dennis, sms_enabled: true
+
 # Finally import any environment specific configuration
 import_config "/var/apps/camp_with_dennis/*.exs"

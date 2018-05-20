@@ -146,6 +146,19 @@ defmodule CampWithDennis.Invitations do
   end
 
   @doc """
+  Clears all RSVPs but leaves invitations intact.
+
+  ## Examples
+
+      iex> clear_rsvps()
+      {:ok, 1}
+
+  """
+  def clear_rsvps() do
+    Repo.delete_all(Accepted)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking invitation changes.
 
   ## Examples
