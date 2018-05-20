@@ -12,6 +12,8 @@ defmodule CampWithDennis.Invitations do
     Invitation
   }
 
+  @total_spots 50
+
   @doc """
   Returns the list of invitations.
 
@@ -31,11 +33,26 @@ defmodule CampWithDennis.Invitations do
   ## Examples
 
       iex> count_invitations()
-      1
+      %{accepted: 1, declined: 0, total: 1}
 
   """
   def count_invitations do
-    Repo.one(from i in Invitation, select: fragment("count(1)"))
+    Invitation
+    |> join(:left, [i], a in assoc(i, :accepted))
+    |> join(:left, [i], d in assoc(i, :declined))
+    |> select([i, a, d], %{accepted: count(a.invitation_id), declined: count(d.invitation_id), total: fragment("count(1)")})
+    |> limit(1)
+    |> Repo.one
+    |> put_pending()
+    |> put_remaining()
+  end
+
+  defp put_pending(%{accepted: accepted, declined: declined, total: total} = counts) do
+    Map.put(counts, :pending, total - accepted - declined)
+  end
+
+  defp put_remaining(%{accepted: accepted, pending: pending} = counts) do
+    Map.put(counts, :remaining, @total_spots - accepted - pending)
   end
 
   @doc """
@@ -52,7 +69,7 @@ defmodule CampWithDennis.Invitations do
       ** (Ecto.NoResultsError)
 
   """
-  def get_invitation!(id), do: Repo.get!(Invitation, id)
+  def get_invitation!(id), do: Repo.get!(invitation_query(), id)
 
   @doc """
   Gets a single invitation.
@@ -66,7 +83,15 @@ defmodule CampWithDennis.Invitations do
       {:error, %Ecto.NoResultsError{}}
 
   """
-  def get_invitation(id), do: Repo.get(Invitation, id)
+  def get_invitation(id), do: Repo.get(invitation_query(), id)
+
+  defp invitation_query do
+    Invitation
+    |> join(:left, [i], a in assoc(i, :accepted))
+    |> join(:left, [i], d in assoc(i, :declined))
+    |> preload([n, a, d], [accepted: a, declined: d])
+    |> limit(1)
+  end
 
   @doc """
   Creates a invitation.

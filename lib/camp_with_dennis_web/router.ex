@@ -1,7 +1,7 @@
 defmodule CampWithDennisWeb.Router do
   use CampWithDennisWeb, :router
   import CampWithDennisWeb.Verification
-  alias CampWithDennisWeb.Redirect
+  # alias CampWithDennisWeb.Redirect
 
   pipeline :browser do
     plug :accepts, ["html"]

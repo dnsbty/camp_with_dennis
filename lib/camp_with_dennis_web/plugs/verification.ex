@@ -4,8 +4,13 @@ defmodule CampWithDennisWeb.Verification do
   alias CampWithDennis.Admin
   alias CampWithDennis.Admin.User, as: AdminUser
   alias CampWithDennis.Invitations
-  alias CampWithDennis.Invitations.Invitation
+  alias CampWithDennis.Invitations.{
+    Accepted,
+    Declined,
+    Invitation
+  }
 
+  @spec ensure_admin(conn :: Plug.Conn.t, options :: list()) :: Plug.Conn.t
   def ensure_admin(conn, _) do
     case get_session(conn, :admin_id) do
       nil ->
@@ -17,6 +22,7 @@ defmodule CampWithDennisWeb.Verification do
     end
   end
 
+  @spec ensure_verified(conn :: Plug.Conn.t, options :: list()) :: Plug.Conn.t
   def ensure_verified(conn, _) do
     case get_session(conn, :invitation_id) do
       nil ->
@@ -24,20 +30,24 @@ defmodule CampWithDennisWeb.Verification do
         |> redirect(to: "/")
         |> halt()
       invitation_id ->
-        assign_invitation_to_conn(conn, invitation_id)
+        conn
+        |> assign_invitation(invitation_id)
+        |> maybe_redirect_to_rsvp()
     end
   end
 
+  @spec ensure_unverified(conn :: Plug.Conn.t, options :: list()) :: Plug.Conn.t
   def ensure_unverified(conn, _) do
     case get_session(conn, :invitation_id) do
       nil -> conn
-      _invitation_id ->
+      invitation_id ->
         conn
-        |> redirect(to: "/rsvp")
-        |> halt()
+        |> assign_invitation(invitation_id)
+        |> maybe_redirect_to_rsvp()
     end
   end
 
+  @spec assign_admin_to_conn(conn :: Plug.Conn.t, admin_id :: integer()) :: Plug.Conn.t
   defp assign_admin_to_conn(conn, admin_id) do
     with %AdminUser{} = admin <- Admin.find(admin_id) do
       assign(conn, :admin, admin)
@@ -51,7 +61,8 @@ defmodule CampWithDennisWeb.Verification do
     end
   end
 
-  defp assign_invitation_to_conn(conn, invitation_id) do
+  @spec assign_invitation(conn :: Plug.Conn.t, invitation_id :: integer()) :: Plug.Conn.t
+  defp assign_invitation(conn, invitation_id) do
     with %Invitation{} = invitation <- Invitations.get_invitation(invitation_id) do
       assign(conn, :invitation, invitation)
     else
@@ -63,4 +74,22 @@ defmodule CampWithDennisWeb.Verification do
         |> halt()
     end
   end
+
+  @spec maybe_redirect_to_rsvp(conn :: Plug.Conn.t) :: Plug.Conn.t
+  defp maybe_redirect_to_rsvp(%{assigns: %{invitation: invitation}, method: "GET"} = conn) do
+    expected = expected_path(invitation)
+    case conn.request_path do
+      ^expected -> conn
+      _ ->
+        conn
+        |> redirect(to: expected)
+        |> halt()
+    end
+  end
+  defp maybe_redirect_to_rsvp(conn), do: conn
+
+  @spec expected_path(invitation :: map()) :: atom()
+  defp expected_path(%{accepted: nil, declined: nil}), do: "/rsvp"
+  defp expected_path(%{declined: %Declined{}}), do: "/rsvp/declined"
+  defp expected_path(%{accepted: %Accepted{}}), do: "/rsvp/accepted"
 end

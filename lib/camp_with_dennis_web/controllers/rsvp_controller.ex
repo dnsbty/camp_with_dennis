@@ -10,10 +10,11 @@ defmodule CampWithDennisWeb.RsvpController do
     with {:ok, _accepted} <- Rsvp.accept_invitation(invitation) do
       redirect(conn, to: rsvp_path(conn, :accepted))
     else
-      _ ->
-      conn
-      |> put_flash(:error, "😕 Something went wrong. Try again?")
-      |> render("index.html")
+      error ->
+        IO.inspect(error, label: "failed to accept invite")
+        conn
+        |> put_flash(:error, "😕 Something went wrong. Try again?")
+        |> render("index.html")
     end
   end
 

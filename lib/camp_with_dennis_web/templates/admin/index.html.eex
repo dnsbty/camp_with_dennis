@@ -1,6 +1,10 @@
 <h1>Admin</h1>
 
-<p><%= @count %> invitations have been created.</p>
+<p><%= @count[:total] %> invitations have been created.</p>
+<p><%= @count[:accepted] %> invitations have been accepted.</p>
+<p><%= @count[:declined] %> invitations have been declined.</p>
+<p><%= @count[:pending] %> invitations are still pending.</p>
+<p><%= @count[:remaining] %> spots are open.</p>
 
 <%= link("New Invitation", to: invitations_path(@conn, :new), class: "btn btn-primary btn-block") %>
 <%= link("Log Out", to: phone_path(@conn, :logout), class: "btn btn-block") %>

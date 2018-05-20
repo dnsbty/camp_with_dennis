@@ -2,6 +2,10 @@ defmodule CampWithDennis.Invitations.Invitation do
   use Ecto.Schema
   import Ecto.Changeset
   alias CampWithDennis.Admin.User, as: Admin
+  alias CampWithDennis.Invitations.{
+    Accepted,
+    Declined
+  }
   alias CampWithDennis.Phone.Number
 
   @fields [:name]
@@ -11,6 +15,8 @@ defmodule CampWithDennis.Invitations.Invitation do
 
     belongs_to :invited_by, Admin
     has_one :phone, Number
+    has_one :accepted, Accepted
+    has_one :declined, Declined
 
     timestamps()
   end
