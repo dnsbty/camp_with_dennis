@@ -11,13 +11,14 @@ config :logger, level: :info
 # Instruct OTP to start the server when creating releases
 config :phoenix, :serve_endpoints, true
 
-config :camp_with_dennis, CampWithDennisWeb.Endpoint,
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
-
-# Configure your database
+# Basic db configuration that can be overwritten in imported config
 config :camp_with_dennis, CampWithDennis.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
+  username: "postgres",
+  password: "postgres",
+  database: "ressipy_prod",
+  hostname: "localhost",
   pool_size: 15
 
-config :camp_with_dennis, message_bird_access_key: System.get_env("MESSAGE_BIRD_ACCESS_KEY")
+# Finally import any environment specific configuration
+import_config "/var/apps/camp_with_dennis/*.exs"
