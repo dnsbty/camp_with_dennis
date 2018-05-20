@@ -156,6 +156,7 @@ defmodule CampWithDennis.Invitations do
   """
   def clear_rsvps() do
     Repo.delete_all(Accepted)
+    Repo.delete_all(Declined)
   end
 
   @doc """

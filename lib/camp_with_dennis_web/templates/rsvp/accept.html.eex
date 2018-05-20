@@ -1,10 +1,10 @@
-<h1>🎉</h1>
+<h1>🎉 Awesome!</h1>
 
-<p>Glad to hear you can come. In order to order the right number of shirts, what size t-shirt do you prefer?<p>
-<p class="small">If the size you prefer isn't here, <%= link("text me at 210-771-8253", to: text_me_link("Can I get an Americamping shirt in a different size? I usually wear ")) %> and let me know</p>
+<p>What size t-shirt do you prefer?<p>
 <%= button("XS", to: rsvp_path(@conn, :size, size: "XS"), class: "btn btn-default btn-block")%>
 <%= button("S", to: rsvp_path(@conn, :size, size: "S"), class: "btn btn-default btn-block")%>
 <%= button("M", to: rsvp_path(@conn, :size, size: "M"), class: "btn btn-default btn-block")%>
 <%= button("L", to: rsvp_path(@conn, :size, size: "L"), class: "btn btn-default btn-block")%>
 <%= button("XL", to: rsvp_path(@conn, :size, size: "XL"), class: "btn btn-default btn-block")%>
 <%= button("2XL", to: rsvp_path(@conn, :size, size: "2XL"), class: "btn btn-default btn-block")%>
+<p class="small">If your size isn't here, <%= link("text me", to: text_me_link("Can I get an Americamping shirt in a different size? I usually wear ")) %> so I can get it for you</p>

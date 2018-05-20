@@ -1,17 +1,19 @@
-<h1>Congratulations!</h1>
-<p>You've been invited to the 3rd Annual Americamping Trip!</p>
-<p>To begin, please enter your phone number</p>
-<%= form_for @changeset, phone_path(@conn, :code), fn f -> %>
-  <label>
-    Phone Number: <%= telephone_input f, :number, id: "phone" %>
-  </label>
+<div class="page-phone">
+  <h1>Americamping 2018</h1>
+  <%= form_for @changeset, phone_path(@conn, :code), fn f -> %>
+    <div class="form-group">
+      <%= label f, :number, "Your Phone Number", class: "control-label" %>
+      <%= telephone_input f, :number, id: "phone", class: "form-control" %>
+      <%= error_tag f, :number %>
+    </div>
 
-  <%= submit "Start" %>
-<% end %>
+    <%= submit "Start", class: "btn btn-primary btn-block" %>
+  <% end %>
 
-<script type="text/javascript">
-  document.getElementById('phone').addEventListener('input', function (e) {
-    var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-  });
-</script>
+  <script type="text/javascript">
+    document.getElementById('phone').addEventListener('input', function (e) {
+      var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+  </script>
+</div>
