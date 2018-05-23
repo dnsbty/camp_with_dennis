@@ -24,7 +24,12 @@ defmodule CampWithDennis.Invitations do
 
   """
   def list_invitations do
-    Repo.all(Invitation)
+    Invitation
+    |> join(:left, [i], a in assoc(i, :accepted))
+    |> join(:left, [i], d in assoc(i, :declined))
+    |> preload([i, a, d], [accepted: a, declined: d])
+    |> order_by(asc: :name)
+    |> Repo.all()
   end
 
   @doc """

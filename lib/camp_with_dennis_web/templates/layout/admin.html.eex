@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="You've been invited to the 3rd Annual Americamping Trip!">
+    <meta name="author" content="Dennis Beatty">
+
+    <title>Americamping 2018 - Admin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:700|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/admin.css") %>">
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <header class="inner">
+          <h1>Admin</h1>
+          <nav>
+            <%= link("New Invitation", to: invitations_path(@conn, :new), class: "btn btn-primary") %>
+            <%= link("Log Out", to: phone_path(@conn, :logout), class: "btn") %>
+          </nav>
+        </header>
+      </div>
+    </header>
+    <div class="container-main">
+      <div class="container">
+        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+        <main role="main">
+          <%= render @view_module, @view_template, assigns %>
+        </main>
+      </div> <!-- /container -->
+    </div> <!-- /container-main -->
+  </body>
+</html>

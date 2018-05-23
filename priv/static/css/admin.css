@@ -1,0 +1,33 @@
+/* Phoenix flash messages */
+.alert:empty { display: none; }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+}
+
+.btn {
+  font-family: 'Nunito', sans-serif;
+}
+
+header.inner {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2em 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.4em;
+}
+
+.nav-item {
+  padding: 1em;
+}

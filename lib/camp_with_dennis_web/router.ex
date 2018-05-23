@@ -13,6 +13,7 @@ defmodule CampWithDennisWeb.Router do
 
   pipeline :admin do
     plug :ensure_admin
+    plug :put_layout, {CampWithDennisWeb.LayoutView, :admin}
   end
 
   pipeline :verified do

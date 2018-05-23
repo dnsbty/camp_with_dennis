@@ -1,10 +1,29 @@
-<h1>Admin</h1>
+<ul class="nav nav-pills">
+  <li class="nav-item"><%= @count[:accepted] %> ✔️</li>
+  <li class="nav-item"><%= @count[:declined] %> ❌</li>
+  <li class="nav-item"><%= @count[:pending] %> pending</li>
+  <li class="nav-item"><%= @count[:remaining] %> open</li>
+</ul>
 
-<p><%= @count[:total] %> invitations have been created.</p>
-<p><%= @count[:accepted] %> invitations have been accepted.</p>
-<p><%= @count[:declined] %> invitations have been declined.</p>
-<p><%= @count[:pending] %> invitations are still pending.</p>
-<p><%= @count[:remaining] %> spots are open.</p>
-
-<%= link("New Invitation", to: invitations_path(@conn, :new), class: "btn btn-primary btn-block") %>
-<%= link("Log Out", to: phone_path(@conn, :logout), class: "btn btn-block") %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Sent</th>
+      <th>RSVPed</th>
+      <th>Size</th>
+      <th>Paid</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for invitation <- @invitations do %>
+    <tr>
+      <td><%= invitation.name %></td>
+      <td><%= sent(invitation) %></td>
+      <td><%= rsvp_status(invitation) %></td>
+      <td><%= shirt_size(invitation) %></td>
+      <td><%= paid(invitation) %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

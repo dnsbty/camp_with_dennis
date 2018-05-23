@@ -8,6 +8,7 @@
     <meta name="author" content="Dennis Beatty">
 
     <title>Americamping 2018</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/bootstrap.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link href="https://fonts.googleapis.com/css?family=Nunito:700|Open+Sans" rel="stylesheet">
   </head>
