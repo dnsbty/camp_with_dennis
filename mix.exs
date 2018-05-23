@@ -40,6 +40,7 @@ defmodule CampWithDennis.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.5"},
+      {:ex_syslogger, "~> 1.4"},
       {:gettext, "~> 0.11"},
       {:httpoison, "~> 1.1"},
       {:phoenix, "~> 1.3.0"},
