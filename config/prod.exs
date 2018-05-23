@@ -23,12 +23,5 @@ config :camp_with_dennis, CampWithDennis.Repo,
 # Turn on SMS sending in production
 config :camp_with_dennis, sms_enabled: true
 
-# Log out to syslog
-config :logger, backends: [:console, {ExSyslogger, :syslog}]
-config :logger, :syslog,
-  level: :debug,
-  format: "[$level] $levelpad$metadata $message",
-  ident: "CampWithDennis"
-
 # Finally import any environment specific configuration
 import_config "/var/apps/camp_with_dennis/*.exs"
