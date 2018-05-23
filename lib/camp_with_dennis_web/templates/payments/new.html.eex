@@ -1,0 +1,11 @@
+<h1>Payment from <%= @invitation.name %></h1>
+<%= form_for @changeset, payments_path(@conn, :save, @invitation.id), fn f -> %>
+  <div class="form-group">
+    <%= label f, :paid_via, class: "control-label" %>
+    <%= select f, :paid_via, payment_methods(), class: "form-control" %>
+    <%= error_tag f, :paid_via %>
+  </div>
+
+  <%= submit "Mark as Paid", class: "btn btn-primary btn-block" %>
+  <%= link "Cancel", to: admin_path(@conn, :index), class: "btn btn-block" %>
+<% end %>

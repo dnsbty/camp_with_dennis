@@ -11,6 +11,7 @@ defmodule CampWithDennis.Invitations do
     Declined,
     Invitation
   }
+  alias CampWithDennis.Rsvp.Payment
 
   @total_spots 50
 
@@ -240,11 +241,33 @@ defmodule CampWithDennis.Invitations do
 
   ## Examples
 
-      iex> accepted_changeset(%Invitation{})
-      %Ecto.Changeset{changes: %{invitation: %Invitation{}}}
+      iex> declined_changeset(%{})
+      %Ecto.Changeset{changes: %{}}
 
   """
-  def declined_changeset(invitation \\ %{}) do
-    Declined.changeset(%Declined{}, invitation)
+  def declined_changeset(params \\ %{}) do
+    Declined.changeset(%Declined{}, params)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` more for display purposes.
+
+  ## Examples
+
+      iex> payment_changeset(%{})
+      %Ecto.Changeset{changes: %{}}
+
+  """
+  def change_accepted(accepted, params \\ %{}) do
+    Accepted.changeset(accepted, params)
+  end
+
+  def save_payment(invitation, params) do
+    case change_accepted(invitation.accepted, params) do
+      %{valid?: true} = changeset ->
+        Repo.update(changeset)
+      changeset ->
+        {:error, changeset}
+    end
   end
 end

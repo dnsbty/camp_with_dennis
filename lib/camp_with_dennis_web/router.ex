@@ -35,6 +35,11 @@ defmodule CampWithDennisWeb.Router do
         post "/create", InvitationsController, :create
       end
 
+      scope "/payments" do
+        get "/:invitation_id", PaymentsController, :new
+        put "/:invitation_id", PaymentsController, :save
+      end
+
       get "/", AdminController, :index
     end
 

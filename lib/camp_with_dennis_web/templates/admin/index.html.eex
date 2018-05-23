@@ -22,7 +22,7 @@
       <td><%= sent(invitation) %></td>
       <td><%= rsvp_status(invitation) %></td>
       <td><%= shirt_size(invitation) %></td>
-      <td><%= paid(invitation) %></td>
+      <td><%= paid(@conn, invitation) %></td>
     </tr>
 <% end %>
   </tbody>
