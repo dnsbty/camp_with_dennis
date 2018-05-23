@@ -2,10 +2,10 @@ defmodule CampWithDennisWeb.AdminView do
   use CampWithDennisWeb, :view
 
   def paid(_conn, %{accepted: %{paid_via: method}}) when byte_size(method) > 0, do: "✔️"
-  def paid(conn, %{id: id} = invitation) do
-    IO.inspect(invitation)
+  def paid(conn, %{id: id, accepted: %{paid_via: _}}) do
     link("❌", to: payments_path(conn, :new, id))
   end
+  def paid(_, _), do: ""
 
   def rsvp_status(%{accepted: nil, declined: nil}), do: ""
   def rsvp_status(%{accepted: _, declined: nil}), do: "✔️"
