@@ -33,6 +33,7 @@ defmodule CampWithDennisWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
+    max_age: 60 * 24*60*60, # 60 days
     key: "_camp_with_dennis_key",
     signing_salt: "Zk6luU9B"
 
