@@ -3,8 +3,13 @@ defmodule CampWithDennisWeb.AdminController do
   alias CampWithDennis.Invitations
 
   def index(conn, _params) do
-    count = Invitations.count_invitations()
     invitations = Invitations.list_invitations()
-    render(conn, "index.html", count: count, invitations: invitations)
+    data = [
+      count: Invitations.count_invitations(),
+      invitations: invitations,
+      gender_breakdown: Invitations.breakdown_genders(invitations)
+    ]
+
+    render(conn, "index.html", data)
   end
 end

@@ -31,3 +31,11 @@ header h1 {
 .nav-item {
   padding: 1em;
 }
+
+.male {
+  color: #aaccff;
+}
+
+.female {
+  color: pink;
+}

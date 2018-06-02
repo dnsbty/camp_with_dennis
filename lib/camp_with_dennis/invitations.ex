@@ -11,7 +11,6 @@ defmodule CampWithDennis.Invitations do
     Declined,
     Invitation
   }
-  alias CampWithDennis.Rsvp.Payment
 
   @total_spots 50
 
@@ -92,6 +91,40 @@ defmodule CampWithDennis.Invitations do
   defp put_remaining(%{accepted: accepted, pending: pending} = counts) do
     Map.put(counts, :remaining, @total_spots - accepted - pending)
   end
+
+  @doc """
+  Breaks down the genders of accepted and pending invitations.
+
+  ## Examples
+
+      iex> breakdown_genders(invitations)
+      %{accepted: %{male: 1, female: 1}, pending: %{male: 0, female: 1}}
+
+  """
+  def breakdown_genders(invitations) do
+    breakdown = %{
+      accepted: %{male: 0, female: 0},
+      pending: %{male: 0, female: 0}
+    }
+
+    Enum.reduce(invitations, breakdown, fn
+      %{accepted: nil, declined: nil, gender: gender}, breakdown ->
+        increment_breakdown(breakdown, :pending, gender)
+      %{accepted: %Accepted{}, gender: gender}, breakdown ->
+        increment_breakdown(breakdown, :accepted, gender)
+      _, breakdown ->
+        breakdown
+    end)
+  end
+
+  defp increment_breakdown(breakdown, status, mf) do
+    gender = gender(mf)
+    current = breakdown[status][gender]
+    put_in(breakdown, [status, gender], current + 1)
+  end
+
+  defp gender("M"), do: :male
+  defp gender("F"), do: :female
 
   @doc """
   Gets a single invitation.

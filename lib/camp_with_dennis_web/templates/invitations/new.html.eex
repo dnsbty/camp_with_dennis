@@ -12,6 +12,11 @@
       <%= error_tag p, :number %>
     </div>
   <% end %>
+  <div class="form-group">
+    <%= label f, :gender, class: "control-label" %>
+    <%= select f, :gender, genders(), class: "form-control" %>
+    <%= error_tag f, :gender %>
+  </div>
 
   <%= submit "Invite", class: "btn btn-primary btn-block" %>
   <%= link "Cancel", to: admin_path(@conn, :index), class: "btn btn-block" %>

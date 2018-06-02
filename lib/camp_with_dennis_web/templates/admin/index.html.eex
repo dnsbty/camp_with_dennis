@@ -1,13 +1,19 @@
 <ul class="nav nav-pills">
-  <li class="nav-item"><%= @count[:accepted] %> ✔️</li>
+  <li class="nav-item">
+    <%= @count[:accepted] %> ✔️
+    (
+      <%= @gender_breakdown.accepted.male %> ♂,
+      <%= @gender_breakdown.accepted.female %> ♀
+    )
+  </li>
   <li class="nav-item"><%= @count[:declined] %> ❌</li>
   <li class="nav-item"><%= @count[:pending] %> pending</li>
   <li class="nav-item"><%= @count[:remaining] %> open</li>
 </ul>
-
 <table class="table">
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
       <th>Sent</th>
       <th>RSVPed</th>
@@ -18,6 +24,7 @@
   <tbody>
 <%= for invitation <- @invitations do %>
     <tr>
+      <td width="1"><span class="<%= gender(invitation) %>">•</span></td>
       <td><%= invitation.name %></td>
       <td><%= sent(invitation) %></td>
       <td><%= rsvp_status(invitation) %></td>
