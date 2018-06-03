@@ -1,8 +1,19 @@
 defmodule CampWithDennisWeb.AdminView do
   use CampWithDennisWeb, :view
 
+  def breakdown_text(%{male: male, female: female}) do
+    "#{male} male, #{female} female"
+  end
+
   def gender(%{gender: "M"}), do: "male"
   def gender(%{gender: "F"}), do: "female"
+
+  def open_breakdown(%{accepted: accepted, pending: pending}) do
+    male = 25 - accepted.male - pending.male
+    female = 25 - accepted.female - pending.female
+
+    breakdown_text(%{male: male, female: female})
+  end
 
   def paid(_conn, %{accepted: %{paid_via: method}}) when byte_size(method) > 0, do: "✔️"
   def paid(conn, %{id: id, accepted: %{paid_via: _}}) do

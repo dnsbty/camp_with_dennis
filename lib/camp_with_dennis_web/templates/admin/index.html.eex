@@ -1,14 +1,14 @@
 <ul class="nav nav-pills">
-  <li class="nav-item">
-    <%= @count[:accepted] %> ✔️
-    (
-      <%= @gender_breakdown.accepted.male %> ♂,
-      <%= @gender_breakdown.accepted.female %> ♀
-    )
+  <li class="nav-item" title="<%= breakdown_text(@gender_breakdown.accepted) %>">
+    <%= @count.accepted %> ✔️
   </li>
-  <li class="nav-item"><%= @count[:declined] %> ❌</li>
-  <li class="nav-item"><%= @count[:pending] %> pending</li>
-  <li class="nav-item"><%= @count[:remaining] %> open</li>
+  <li class="nav-item"><%= @count.declined %> ❌</li>
+  <li class="nav-item" title="<%= breakdown_text(@gender_breakdown.pending) %>">
+    <%= @count.pending %> ?
+  </li>
+  <li class="nav-item" title="<%= open_breakdown(@gender_breakdown) %>">
+    <%= @count.remaining %> open
+  </li>
 </ul>
 <table class="table">
   <thead>
