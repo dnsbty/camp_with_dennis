@@ -25,7 +25,10 @@ defmodule CampWithDennisWeb.AdminView do
   def rsvp_status(%{accepted: _, declined: nil}), do: "✔️"
   def rsvp_status(%{accepted: nil, declined: _}), do: "❌"
 
-  def sent(_invitation), do: ""
+  def sent(_conn, %{sent?: true}), do: "✔️"
+  def sent(conn, %{id: id}) do
+    link("❌", to: invitations_path(conn, :sent, id), method: :put)
+  end
 
   def shirt_size(%{accepted: %{shirt_size: size}}), do: size
   def shirt_size(_), do: ""

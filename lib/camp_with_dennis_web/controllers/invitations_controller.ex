@@ -15,4 +15,12 @@ defmodule CampWithDennisWeb.InvitationsController do
       |> redirect(to: admin_path(conn, :index))
     end
   end
+
+  def sent(conn, %{"invitation_id" => invitation_id}) do
+    with {1, nil} <- Invitations.mark_sent(invitation_id) do
+      conn
+      |> put_flash(:info, "Invitation was successfully marked as sent.")
+      |> redirect(to: admin_path(conn, :index))
+    end
+  end
 end

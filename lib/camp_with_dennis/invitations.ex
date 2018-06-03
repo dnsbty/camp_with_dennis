@@ -127,6 +127,20 @@ defmodule CampWithDennis.Invitations do
   defp gender("F"), do: :female
 
   @doc """
+  Mark an invitation as having been sent.
+
+  ## Examples
+
+      iex> mark_sent(123)
+      {:ok, %Invitation{sent?: true}}
+
+  """
+  def mark_sent(invitation_id) do
+    query = from i in Invitation, where: i.id == ^invitation_id
+    Repo.update_all(query, set: [sent?: true])
+  end
+
+  @doc """
   Gets a single invitation.
 
   Raises `Ecto.NoResultsError` if the Invitation does not exist.

@@ -8,11 +8,13 @@ defmodule CampWithDennis.Invitations.Invitation do
   }
   alias CampWithDennis.Phone.Number
 
-  @fields [:name, :gender]
+  @fields [:name, :gender, :sent?]
+  @required_fields @fields -- [:sent?]
 
   schema "invitations" do
     field :name, :string
     field :gender, :string
+    field :sent?, :boolean
 
     belongs_to :invited_by, Admin
     has_one :phone, Number
@@ -26,7 +28,7 @@ defmodule CampWithDennis.Invitations.Invitation do
   def changeset(invitation, attrs) do
     invitation
     |> cast(attrs, @fields)
-    |> validate_required(@fields)
+    |> validate_required(@required_fields)
     |> validate_length(:gender, is: 1)
     |> put_assoc(:invited_by, attrs["invited_by"])
     |> cast_assoc(:phone, required: true, with: &Number.changeset/2)

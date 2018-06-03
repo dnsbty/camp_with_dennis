@@ -26,7 +26,7 @@
     <tr>
       <td width="1"><span class="<%= gender(invitation) %>">•</span></td>
       <td><%= invitation.name %></td>
-      <td><%= sent(invitation) %></td>
+      <td><%= sent(@conn, invitation) %></td>
       <td><%= rsvp_status(invitation) %></td>
       <td><%= shirt_size(invitation) %></td>
       <td><%= paid(@conn, invitation) %></td>
