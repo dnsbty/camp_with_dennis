@@ -1,7 +1,6 @@
 defmodule CampWithDennisWeb.Router do
   use CampWithDennisWeb, :router
   import CampWithDennisWeb.Verification
-  # alias CampWithDennisWeb.Redirect
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -31,6 +30,7 @@ defmodule CampWithDennisWeb.Router do
       pipe_through :admin
 
       scope "/invitations" do
+        get "/", InvitationsController, :index
         get "/new", InvitationsController, :new
         post "/create", InvitationsController, :create
         put "/:invitation_id/sent", InvitationsController, :sent
@@ -41,7 +41,7 @@ defmodule CampWithDennisWeb.Router do
         put "/:invitation_id", PaymentsController, :save
       end
 
-      get "/", AdminController, :index
+      get "/", Redirect, to: "/admin/invitations"
     end
 
     scope "/rsvp" do

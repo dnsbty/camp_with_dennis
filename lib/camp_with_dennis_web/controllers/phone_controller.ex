@@ -43,7 +43,7 @@ defmodule CampWithDennisWeb.PhoneController do
     conn
     |> put_session(:is_admin?, true)
     |> put_session(:admin_id, id)
-    |> redirect(to: admin_path(conn, :index))
+    |> redirect(to: invitations_path(conn, :index))
   end
 
   defp handle_user(conn, %Invitation{id: id}) do

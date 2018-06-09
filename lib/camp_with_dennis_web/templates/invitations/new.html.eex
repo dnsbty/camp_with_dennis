@@ -19,7 +19,7 @@
   </div>
 
   <%= submit "Invite", class: "btn btn-primary btn-block" %>
-  <%= link "Cancel", to: admin_path(@conn, :index), class: "btn btn-block" %>
+  <%= link "Cancel", to: invitations_path(@conn, :index), class: "btn btn-block" %>
 <% end %>
 
 <script type="text/javascript">

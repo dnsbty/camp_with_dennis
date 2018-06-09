@@ -14,7 +14,7 @@ defmodule CampWithDennisWeb.PaymentsController do
     with Invitations.save_payment(invitation, accepted) do
       conn
       |> put_flash(:info, "Saved payment for #{invitation.name}")
-      |> redirect(to: admin_path(conn, :index))
+      |> redirect(to: invitations_path(conn, :index))
     end
   end
 
@@ -25,7 +25,7 @@ defmodule CampWithDennisWeb.PaymentsController do
   def get_invitation(conn, _) do
     conn
     |> put_flash(:error, "Please provide an invitation ID")
-    |> redirect(to: admin_path(conn, :index))
+    |> redirect(to: invitations_path(conn, :index))
     |> halt()
   end
 
@@ -35,7 +35,7 @@ defmodule CampWithDennisWeb.PaymentsController do
       _ ->
         conn
         |> put_flash(:error, "That user already paid.")
-        |> redirect(to: admin_path(conn, :index))
+        |> redirect(to: invitations_path(conn, :index))
         |> halt()
     end
   end
@@ -43,7 +43,7 @@ defmodule CampWithDennisWeb.PaymentsController do
   def ensure_unpaid(conn, _) do
     conn
     |> put_flash(:error, "That user hasn't yet RSVPed.")
-    |> redirect(to: admin_path(conn, :index))
+    |> redirect(to: invitations_path(conn, :index))
     |> halt()
   end
 end

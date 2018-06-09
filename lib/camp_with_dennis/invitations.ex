@@ -33,6 +33,32 @@ defmodule CampWithDennis.Invitations do
   end
 
   @doc """
+  Returns the list of invitations.
+
+  ## Examples
+
+      iex> list_invitations()
+      [%Invitation{}, ...]
+
+  """
+  def list_pending do
+    base = invitation_base()
+
+    base
+    |> where([i, a, d], is_nil(d.invitation_id))
+    |> where([i, a, d], is_nil(a.paid_via) or a.paid_via == "")
+    |> Repo.all()
+  end
+
+  defp invitation_base do
+    Invitation
+    |> join(:left, [i], a in assoc(i, :accepted))
+    |> join(:left, [i], d in assoc(i, :declined))
+    |> preload([i, a, d], [accepted: a, declined: d])
+    |> order_by(asc: :name)
+  end
+
+  @doc """
   Returns the list of accepted invitations.
 
   ## Examples

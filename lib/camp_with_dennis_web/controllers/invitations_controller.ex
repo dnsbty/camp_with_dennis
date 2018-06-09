@@ -2,6 +2,17 @@ defmodule CampWithDennisWeb.InvitationsController do
   use CampWithDennisWeb, :controller
   alias CampWithDennis.Invitations
 
+  def index(conn, _params) do
+    invitations = Invitations.list_pending()
+    data = [
+      count: Invitations.count_invitations(),
+      invitations: invitations,
+      gender_breakdown: Invitations.breakdown_genders(invitations)
+    ]
+
+    render(conn, "index.html", data)
+  end
+
   def new(conn, _params) do
     render(conn, "new.html", changeset: Invitations.invitation_changeset())
   end
@@ -12,7 +23,7 @@ defmodule CampWithDennisWeb.InvitationsController do
     with {:ok, _invitation} <- Invitations.create_invitation(attrs) do
       conn
       |> put_flash(:info, "Invitation was successfully created.")
-      |> redirect(to: admin_path(conn, :index))
+      |> redirect(to: invitations_path(conn, :index))
     end
   end
 
@@ -20,7 +31,7 @@ defmodule CampWithDennisWeb.InvitationsController do
     with {1, nil} <- Invitations.mark_sent(invitation_id) do
       conn
       |> put_flash(:info, "Invitation was successfully marked as sent.")
-      |> redirect(to: admin_path(conn, :index))
+      |> redirect(to: invitations_path(conn, :index))
     end
   end
 end
