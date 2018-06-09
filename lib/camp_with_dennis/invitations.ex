@@ -93,6 +93,22 @@ defmodule CampWithDennis.Invitations do
   end
 
   @doc """
+  Count the number of invitations that selected each shirt size.
+
+  ## Examples
+
+      iex> count_shirt_sizes()\
+      %{"XS" => 1, "S" => 2, "L" => 5, "XL" => 1}
+  """
+  def count_shirt_sizes do
+    Accepted
+    |> group_by([a], a.shirt_size)
+    |> select([a], {a.shirt_size, count(1)})
+    |> Repo.all()
+    |> Enum.into(%{})
+  end
+
+  @doc """
   Breaks down the genders of accepted and pending invitations.
 
   ## Examples
