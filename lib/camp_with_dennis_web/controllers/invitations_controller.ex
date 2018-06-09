@@ -6,6 +6,31 @@ defmodule CampWithDennisWeb.InvitationsController do
     invitations = Invitations.list_pending()
     data = [
       count: Invitations.count_invitations(),
+      filter: :pending,
+      invitations: invitations,
+      gender_breakdown: Invitations.breakdown_genders(invitations)
+    ]
+
+    render(conn, "index.html", data)
+  end
+
+  def accepted(conn, _params) do
+    invitations = Invitations.list_accepted()
+    data = [
+      count: Invitations.count_invitations(),
+      filter: :accepted,
+      invitations: invitations,
+      gender_breakdown: Invitations.breakdown_genders(invitations)
+    ]
+
+    render(conn, "index.html", data)
+  end
+
+  def declined(conn, _params) do
+    invitations = Invitations.list_declined()
+    data = [
+      count: Invitations.count_invitations(),
+      filter: :declined,
       invitations: invitations,
       gender_breakdown: Invitations.breakdown_genders(invitations)
     ]

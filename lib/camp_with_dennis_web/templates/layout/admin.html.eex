@@ -17,7 +17,7 @@
     <header>
       <div class="container">
         <header class="inner">
-          <h1>Admin</h1>
+          <h1><%= title(@conn.private.phoenix_action) %></h1>
           <nav>
             <%= link("New Invitation", to: invitations_path(@conn, :new), class: "btn btn-primary") %>
             <%= link("Log Out", to: phone_path(@conn, :logout), class: "btn") %>

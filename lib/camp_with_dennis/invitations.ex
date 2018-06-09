@@ -33,11 +33,29 @@ defmodule CampWithDennis.Invitations do
   end
 
   @doc """
-  Returns the list of invitations.
+  Returns the list of accepted invitations.
 
   ## Examples
 
-      iex> list_invitations()
+      iex> list_accepted()
+      [%Invitation{}, ...]
+
+  """
+  def list_accepted do
+    base = invitation_base()
+
+    base
+    |> where([i, a, d], is_nil(d.invitation_id))
+    |> where([i, a, d], a.paid_via in ["venmo", "square_cash", "apple_pay_cash"])
+    |> Repo.all()
+  end
+
+  @doc """
+  Returns the list of pending invitations.
+
+  ## Examples
+
+      iex> list_pending()
       [%Invitation{}, ...]
 
   """
@@ -101,13 +119,20 @@ defmodule CampWithDennis.Invitations do
   """
   def count_invitations do
     Invitation
-    |> join(:left, [i], a in assoc(i, :accepted))
     |> join(:left, [i], d in assoc(i, :declined))
-    |> select([i, a, d], %{accepted: count(a.invitation_id), declined: count(d.invitation_id), total: fragment("count(1)")})
+    |> select([i, d], %{declined: count(d.invitation_id), total: fragment("count(1)")})
     |> limit(1)
     |> Repo.one
+    |> put_accepted()
     |> put_pending()
     |> put_remaining()
+  end
+
+  def put_accepted(counts) do
+    query = from a in Accepted, where: a.paid_via != "", select: count(1)
+    accepted = Repo.one(query)
+
+    Map.put(counts, :accepted, accepted)
   end
 
   defp put_pending(%{accepted: accepted, declined: declined, total: total} = counts) do

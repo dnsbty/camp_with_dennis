@@ -1,13 +1,15 @@
 <ul class="nav nav-pills">
-  <li class="nav-item" title="<%= breakdown_text(@gender_breakdown.accepted) %>">
-    <%= @count.accepted %> ✔️
-  </li>
-  <li class="nav-item"><%= @count.declined %> ❌</li>
   <li class="nav-item" title="<%= breakdown_text(@gender_breakdown.pending) %>">
-    <%= @count.pending %> ?
+    <%= link("#{@count.pending} ❓", to: invitations_path(@conn, :index), class: nav_link(:pending, @filter)) %>
+  </li>
+  <li class="nav-item" title="<%= breakdown_text(@gender_breakdown.accepted) %>">
+    <%= link("#{@count.accepted} ✔️", to: invitations_path(@conn, :accepted), class: nav_link(:accepted, @filter)) %>
+  </li>
+  <li class="nav-item">
+    <%= link("#{@count.declined} ❌", to: invitations_path(@conn, :declined), class: nav_link(:declined, @filter)) %>
   </li>
   <li class="nav-item" title="<%= open_breakdown(@gender_breakdown) %>">
-    <%= @count.remaining %> open
+    <a class="nav-link disabled" href="#"><%= @count.remaining %> open</a>
   </li>
 </ul>
 <table class="table">
