@@ -7,7 +7,9 @@ config :camp_with_dennis, CampWithDennisWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger,
+  backends: [:console],
+  level: :warn
 
 # Configure your database
 config :camp_with_dennis, CampWithDennis.Repo,
@@ -19,3 +21,9 @@ config :camp_with_dennis, CampWithDennis.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :camp_with_dennis, message_bird_access_key: "ACCESS_KEY"
+config :honeybadger, api_key: ""
+
+config :logger, :logger_papertrail_backend,
+  url: "",
+  level: :debug,
+  format: "$time $metadata[$level] $message\n"
