@@ -36,3 +36,9 @@
 <% end %>
   </tbody>
 </table>
+
+<p>
+  <%= "#{@count[@filter]} #{@filter}" %>:
+  <%= @gender_breakdown[@filter][:male] %> male and
+  <%= @gender_breakdown[@filter][:female] %> female
+</p>
