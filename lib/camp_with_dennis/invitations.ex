@@ -93,6 +93,25 @@ defmodule CampWithDennis.Invitations do
   end
 
   @doc """
+  Filter invitations based on state.
+
+  ## Examples
+
+      iex> filter_invitations([%Invitation{}, %Invitation{}], :accepted)
+      [%Invitation{}]
+
+  """
+  def filter_invitations(invitations, state) do
+    Enum.filter(invitations, fn(invitation) ->
+      category(invitation) == state
+    end)
+  end
+
+  defp category(%{declined: declined}) when not is_nil(declined), do: :declined
+  defp category(%{accepted: %{paid_via: paid_via}}) when byte_size(paid_via) > 0, do: :accepted
+  defp category(_), do: :pending
+
+  @doc """
   Count invitations.
 
   ## Examples
@@ -155,16 +174,17 @@ defmodule CampWithDennis.Invitations do
   def breakdown_genders(invitations) do
     breakdown = %{
       accepted: %{male: 0, female: 0},
+      declined: %{male: 0, female: 0},
       pending: %{male: 0, female: 0}
     }
 
     Enum.reduce(invitations, breakdown, fn
-      %{accepted: nil, declined: nil, gender: gender}, breakdown ->
-        increment_breakdown(breakdown, :pending, gender)
-      %{accepted: %Accepted{}, gender: gender}, breakdown ->
+      %{accepted: %{paid_via: paid_via}, gender: gender}, breakdown when byte_size(paid_via) > 0 ->
         increment_breakdown(breakdown, :accepted, gender)
-      _, breakdown ->
-        breakdown
+      %{accepted: nil, declined: d, gender: gender}, breakdown when not is_nil(d) ->
+        increment_breakdown(breakdown, :declined, gender)
+      %{gender: gender}, breakdown ->
+        increment_breakdown(breakdown, :pending, gender)
     end)
   end
 
