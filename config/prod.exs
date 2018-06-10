@@ -6,7 +6,7 @@ config :camp_with_dennis, CampWithDennisWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, level: :debug
 
 # Instruct OTP to start the server when creating releases
 config :phoenix, :serve_endpoints, true
