@@ -1,5 +1,6 @@
 defmodule CampWithDennisWeb.Router do
   use CampWithDennisWeb, :router
+  use Honeybadger.Plug
   import CampWithDennisWeb.Verification
 
   pipeline :browser do

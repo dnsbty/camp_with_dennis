@@ -1,6 +1,5 @@
 defmodule CampWithDennisWeb.InvitationsView do
   use CampWithDennisWeb, :view
-  alias CampWithDennisWeb.Endpoint
 
   def breakdown_text(%{male: male, female: female}) do
     "#{male} male, #{female} female"
@@ -20,7 +19,7 @@ defmodule CampWithDennisWeb.InvitationsView do
     "nav-link active"
   end
 
-  def nav_link(page, _), do: "nav-link"
+  def nav_link(_, _), do: "nav-link"
 
   def open_breakdown(%{accepted: accepted, pending: pending}) do
     male = 25 - accepted.male - pending.male

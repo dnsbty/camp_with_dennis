@@ -45,8 +45,24 @@ defmodule CampWithDennis.Invitations do
     base = invitation_base()
 
     base
-    |> where([i, a, d], is_nil(d.invitation_id))
     |> where([i, a, d], a.paid_via in ["venmo", "square_cash", "apple_pay_cash"])
+    |> Repo.all()
+  end
+
+  @doc """
+  Returns the list of declined invitations.
+
+  ## Examples
+
+      iex> list_declined()
+      [%Invitation{}, ...]
+
+  """
+  def list_declined do
+    base = invitation_base()
+
+    base
+    |> where([i, a, d], not is_nil(d.invitation_id))
     |> Repo.all()
   end
 
@@ -74,38 +90,6 @@ defmodule CampWithDennis.Invitations do
     |> join(:left, [i], d in assoc(i, :declined))
     |> preload([i, a, d], [accepted: a, declined: d])
     |> order_by(asc: :name)
-  end
-
-  @doc """
-  Returns the list of accepted invitations.
-
-  ## Examples
-
-      iex> list_accepted()
-      [%Invitation{}, ...]
-
-  """
-  def list_accepted do
-    Invitation
-    |> join(:inner, [i], a in assoc(i, :accepted))
-    |> preload([i, a], [accepted: a])
-    |> Repo.all()
-  end
-
-  @doc """
-  Returns the list of declined invitations.
-
-  ## Examples
-
-      iex> list_declined()
-      [%Invitation{}, ...]
-
-  """
-  def list_declined do
-    Invitation
-    |> join(:inner, [i], d in assoc(i, :declined))
-    |> preload([i, d], [declined: d])
-    |> Repo.all()
   end
 
   @doc """
