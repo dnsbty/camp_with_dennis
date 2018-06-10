@@ -23,6 +23,7 @@ defmodule CampWithDennis.Mixfile do
       extra_applications: [
         :crypto,
         :logger,
+        :logger_papertrail_backend,
         :honeybadger,
         :runtime_tools,
         :parse_trans
@@ -44,6 +45,7 @@ defmodule CampWithDennis.Mixfile do
       {:gettext, "~> 0.11"},
       {:honeybadger, "~> 0.10"},
       {:httpoison, "~> 1.1"},
+      {:logger_papertrail_backend, "~> 1.0"},
       {:phoenix, "~> 1.3.0"},
       {:phoenix_ecto, "~> 3.2"},
       {:phoenix_html, "~> 2.10"},
