@@ -54,6 +54,7 @@ defmodule CampWithDennisWeb.Router do
       get "/accepted", RsvpController, :accepted
       post "/decline", RsvpController, :decline
       get "/declined", RsvpController, :declined
+      get "/info", RsvpController, :info
       post "/size", RsvpController, :size
       get "/pay", RsvpController, :pay
 

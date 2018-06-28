@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:700|Open+Sans" rel="stylesheet">
   </head>
 
-  <body>
+  <body class="<%= page_class(assigns[:page_name]) %>">
     <div class="bg">
       <div id="stars"></div>
       <div id="stars2"></div>

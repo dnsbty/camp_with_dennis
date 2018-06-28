@@ -92,5 +92,6 @@ defmodule CampWithDennisWeb.Verification do
   defp expected_path(%{accepted: nil, declined: nil}), do: "/rsvp"
   defp expected_path(%{declined: %Declined{}}), do: "/rsvp/declined"
   defp expected_path(%{accepted: %Accepted{shirt_size: ""}}), do: "/rsvp/accepted"
-  defp expected_path(%{accepted: %Accepted{}}), do: "/rsvp/pay"
+  defp expected_path(%{accepted: %Accepted{paid_via: ""}}), do: "/rsvp/pay"
+  defp expected_path(%{accepted: %Accepted{}}), do: "/rsvp/info"
 end
