@@ -21,8 +21,22 @@ defmodule CampWithDennis.Phone do
     |> Repo.get_by(number: number)
   end
 
+  def list_paid_numbers do
+    Number
+    |> join(:inner, [n], i in assoc(n, :invitation))
+    |> join(:inner, [n, i], a in assoc(i, :accepted))
+    |> where([n, i, a], a.paid_via != "")
+    |> select([n], n.number)
+    |> Repo.all()
+  end
+
   def number_changeset(params \\ %{}) do
     Number.changeset(%Number{}, params)
+  end
+
+  def send_to_all_paid(message) do
+    paid = list_paid_numbers()
+    MessageBird.send_message(paid, message)
   end
 
   def send_verification(params) do
